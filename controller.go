@@ -8,6 +8,8 @@ import (
 	"net/http"
 	"strings"
 
+	"gopkg.in/mgo.v2/bson"
+
 	"github.com/gorilla/mux"
 )
 
@@ -18,7 +20,7 @@ type Controller struct {
 
 // Index GET /
 func (c *Controller) Index(w http.ResponseWriter, r *http.Request) {
-	leagues := c.Repository.GetLeagues() // list of all leagues
+	leagues := c.Repository.GetLeagues()
 	log.Println(leagues)
 	data, _ := json.Marshal(leagues)
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
@@ -60,7 +62,11 @@ func (c *Controller) AddLeague(w http.ResponseWriter, r *http.Request) {
 
 // UpdateLeague PUT /
 func (c *Controller) UpdateLeague(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	id := vars["id"]
+
 	var league League
+
 	body, err := ioutil.ReadAll(io.LimitReader(r.Body, 1048576)) // read the body of the request
 	if err != nil {
 		log.Fatalln("Error UpdateLeague", err)
@@ -79,14 +85,21 @@ func (c *Controller) UpdateLeague(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
+
+	league.ID = bson.ObjectIdHex(id)
+
 	success := c.Repository.UpdateLeague(league) // updates the league in the DB
+
 	if !success {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
+
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
+
 	w.WriteHeader(http.StatusOK)
+
 	return
 }
 

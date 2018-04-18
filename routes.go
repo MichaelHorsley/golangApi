@@ -35,7 +35,7 @@ var routes = Routes{
 	Route{
 		"UpdateLeague",
 		"PUT",
-		"/",
+		"/{id}",
 		controller.UpdateLeague,
 	},
 	Route{
