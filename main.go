@@ -5,10 +5,12 @@ import (
 	"net/http"
 
 	"github.com/gorilla/handlers"
+
+	"poolgolang/league"
 )
 
 func main() {
-	router := NewRouter()
+	router := league.NewRouter()
 	allowedOrigins := handlers.AllowedOrigins([]string{"*"})
 	allowedMethods := handlers.AllowedMethods([]string{"GET", "POST", "DELETE", "PUT"})
 

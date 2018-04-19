@@ -1,4 +1,4 @@
-package main
+package league
 
 import (
 	"encoding/json"
