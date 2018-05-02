@@ -3,14 +3,13 @@ package main
 import (
 	"log"
 	"net/http"
+	"poolgolang/participant"
 
 	"github.com/gorilla/handlers"
-
-	"poolgolang/league"
 )
 
 func main() {
-	router := league.NewRouter()
+	router := participant.NewRouter()
 	allowedOrigins := handlers.AllowedOrigins([]string{"*"})
 	allowedMethods := handlers.AllowedMethods([]string{"GET", "POST", "DELETE", "PUT"})
 
