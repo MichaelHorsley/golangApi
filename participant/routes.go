@@ -1,62 +1,38 @@
 package participant
 
 import (
-	"net/http"
-
-	"github.com/gorilla/mux"
+	"poolgolang/infrastructure"
 )
 
 var controller = &Controller{Repository: Repository{}}
 
-// Route defines a route
-type Route struct {
-	Name        string
-	Method      string
-	Pattern     string
-	HandlerFunc http.HandlerFunc
-}
-
-//Routes defines the list of routes of our API
-type Routes []Route
-
-var routes = Routes{
-	Route{
+var routes = infrastructure.Routes{
+	infrastructure.Route{
 		"Index",
 		"GET",
-		"/",
+		"/participants",
 		controller.Index,
 	},
-	Route{
+	infrastructure.Route{
 		"AddParticipant",
 		"POST",
-		"/",
+		"/participants",
 		controller.AddParticipant,
 	},
-	Route{
+	infrastructure.Route{
 		"UpdateParticipant",
 		"PUT",
-		"/{id}",
+		"/participants/{id}",
 		controller.UpdateParticipant,
 	},
-	Route{
+	infrastructure.Route{
 		"DeleteParticipant",
 		"DELETE",
-		"/{id}",
+		"/participants/{id}",
 		controller.DeleteParticipant,
 	},
 }
 
-//NewRouter configures a new router to the API
-func NewRouter() *mux.Router {
-	router := mux.NewRouter().StrictSlash(true)
-	for _, route := range routes {
-		var handler http.Handler
-		handler = route.HandlerFunc
-		router.
-			Methods(route.Method).
-			Path(route.Pattern).
-			Name(route.Name).
-			Handler(handler)
-	}
-	return router
+func GetRoutes() infrastructure.Routes {
+	return routes
 }

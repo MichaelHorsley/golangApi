@@ -1,62 +1,38 @@
 package league
 
 import (
-	"net/http"
-
-	"github.com/gorilla/mux"
+	"poolgolang/infrastructure"
 )
 
 var controller = &Controller{Repository: Repository{}}
 
-// Route defines a route
-type Route struct {
-	Name        string
-	Method      string
-	Pattern     string
-	HandlerFunc http.HandlerFunc
-}
-
-//Routes defines the list of routes of our API
-type Routes []Route
-
-var routes = Routes{
-	Route{
+var routes = infrastructure.Routes{
+	infrastructure.Route{
 		"Index",
 		"GET",
-		"/",
+		"/leagues",
 		controller.Index,
 	},
-	Route{
+	infrastructure.Route{
 		"AddLeague",
 		"POST",
-		"/",
+		"/leagues",
 		controller.AddLeague,
 	},
-	Route{
+	infrastructure.Route{
 		"UpdateLeague",
 		"PUT",
-		"/{id}",
+		"/leagues/{id}",
 		controller.UpdateLeague,
 	},
-	Route{
+	infrastructure.Route{
 		"DeleteLeague",
 		"DELETE",
-		"/{id}",
+		"/leagues/{id}",
 		controller.DeleteLeague,
 	},
 }
 
-//NewRouter configures a new router to the API
-func NewRouter() *mux.Router {
-	router := mux.NewRouter().StrictSlash(true)
-	for _, route := range routes {
-		var handler http.Handler
-		handler = route.HandlerFunc
-		router.
-			Methods(route.Method).
-			Path(route.Pattern).
-			Name(route.Name).
-			Handler(handler)
-	}
-	return router
+func GetRoutes() infrastructure.Routes {
+	return routes
 }
