@@ -1,7 +1,7 @@
-package league
+package participant
 
 import (
-	"poolgolang/infrastructure"
+	"poolgolang/src/infrastructure"
 )
 
 var controller = &Controller{Repository: Repository{}}
@@ -10,26 +10,26 @@ var routes = infrastructure.Routes{
 	infrastructure.Route{
 		"Index",
 		"GET",
-		"/leagues",
+		"/participants",
 		controller.Index,
 	},
 	infrastructure.Route{
-		"AddLeague",
+		"AddParticipant",
 		"POST",
-		"/leagues",
-		controller.AddLeague,
+		"/participants",
+		controller.AddParticipant,
 	},
 	infrastructure.Route{
-		"UpdateLeague",
+		"UpdateParticipant",
 		"PUT",
-		"/leagues/{id}",
-		controller.UpdateLeague,
+		"/participants/{id}",
+		controller.UpdateParticipant,
 	},
 	infrastructure.Route{
-		"DeleteLeague",
+		"DeleteParticipant",
 		"DELETE",
-		"/leagues/{id}",
-		controller.DeleteLeague,
+		"/participants/{id}",
+		controller.DeleteParticipant,
 	},
 }
 

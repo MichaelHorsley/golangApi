@@ -5,9 +5,9 @@ import (
 
 	"github.com/gorilla/mux"
 
-	"poolgolang/infrastructure"
-	"poolgolang/league"
-	"poolgolang/participant"
+	"poolgolang/src/infrastructure"
+	"poolgolang/src/league"
+	"poolgolang/src/participant"
 )
 
 func NewRouter() *mux.Router {
