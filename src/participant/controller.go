@@ -52,8 +52,8 @@ func (c *Controller) AddParticipant(w http.ResponseWriter, r *http.Request) {
 		log.Fatalln("Error AddParticipant", err)
 	}
 
-	if err := json.Unmarshal(body, &participant); err != nil { // unmarshall body contents as a type Candidate
-		w.WriteHeader(422) // unprocessable entity
+	if err := json.Unmarshal(body, &participant); err != nil {
+		w.WriteHeader(422)
 		if err := json.NewEncoder(w).Encode(err); err != nil {
 			log.Fatalln("Error AddParticipant unmarshalling data", err)
 			w.WriteHeader(http.StatusInternalServerError)

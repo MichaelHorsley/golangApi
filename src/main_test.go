@@ -5,6 +5,7 @@ import (
 	"testing"
 	"net/http/httptest"
 	"bytes"
+	"strconv"
 )
 
 
@@ -23,15 +24,12 @@ func Test_GivenValidParticipant_WhenPostToParticipants_ThenReturns201Code(t *tes
 	checkResponseCode(t, http.StatusCreated, response.Code)
 }
 
-func BenchmarkHello(b *testing.B) {
-
+func Benchmark_Hello(b *testing.B) {
 	a = App{}
 	a.Initialize()
 
 	for i := 0; i < b.N; i++ {
-
-		payload := []byte(`{"name":"Michael Horsley","email":"Michael.Horsley@sorted.com"}`)
-
+		payload := []byte(`{"name":"Michael Horsley` + strconv.Itoa(i) + `","email":"Michael.Horsley` + strconv.Itoa(i) + `@sorted.com"}`)
 		req, _ := http.NewRequest("POST", "/participants", bytes.NewBuffer(payload))
 		executeRequest(req)
 	}
