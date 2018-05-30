@@ -23,6 +23,20 @@ func TestItSavesParticipant(t *testing.T) {
 	checkResponseCode(t, http.StatusCreated, response.Code)
 }
 
+func BenchmarkHello(b *testing.B) {
+	a = App{}
+	a.Initialize()
+
+	
+	for i := 0; i < b.N; i++ {
+
+		payload := []byte(`{"name":"Michael Horsley","email":"Michael.Horsley@sorted.com"}`)
+
+		req, _ := http.NewRequest("POST", "/participants", bytes.NewBuffer(payload))
+		executeRequest(req)
+	}
+}
+
 func executeRequest(req *http.Request) *httptest.ResponseRecorder {
 	rr := httptest.NewRecorder()
 	a.Router.ServeHTTP(rr, req)
