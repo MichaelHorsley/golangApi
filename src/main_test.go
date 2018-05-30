@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"net/http"
 	"net/http/httptest"
-	"poolgolang/participant"
+	"poolgolang/src/participant"
 	"strconv"
 	"testing"
 )
@@ -27,7 +27,7 @@ func Test_GivenValidParticipant_WhenPutToParticipants_ThenReturns200Code(t *test
 	a.Initialize()
 
 	postResponse := AddParticipant()
-	participant := participant.Participant
+	participant := participant.Participant{}
 	json.Unmarshal(postResponse.Body.Bytes(), &participant)
 
 	payload := []byte(`{"name":"Michael Horsley","email":"Michael.Horsley@sorted.com"}`)
