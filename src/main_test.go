@@ -1,25 +1,26 @@
-package tests
+package main
 
 import (
 	"net/http"
 	"testing"
 	"net/http/httptest"
-	"poolgolang/src/infrastructure"
+	"bytes"
 )
 
 
-var a infrastructure.App
+var a App
 
-func TestEmptyTable(t *testing.T) {
+func TestItSavesParticipant(t *testing.T) {
 
-	req, _ := http.NewRequest("GET", "/products", nil)
+	a = App{}
+	a.Initialize()
+
+	payload := []byte(`{"name":"Michael Horsley","email":"Michael.Horsley@sorted.com"}`)
+
+	req, _ := http.NewRequest("POST", "/participants", bytes.NewBuffer(payload))
 	response := executeRequest(req)
 
-	checkResponseCode(t, http.StatusOK, response.Code)
-
-	if body := response.Body.String(); body != "[]" {
-		t.Errorf("Expected an empty array. Got %s", body)
-	}
+	checkResponseCode(t, http.StatusCreated, response.Code)
 }
 
 func executeRequest(req *http.Request) *httptest.ResponseRecorder {

@@ -11,9 +11,11 @@ type App struct {
 	Router *mux.Router
 }
 
-func (a *App) Run(addr string) {
+func (a *App) Initialize() {
 	a.Router = NewRouter()
+}
 
+func (a *App) Run(addr string) {
 	allowedOrigins := handlers.AllowedOrigins([]string{"*"})
 	allowedMethods := handlers.AllowedMethods([]string{"GET", "POST", "DELETE", "PUT"})
 
