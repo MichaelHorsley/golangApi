@@ -10,7 +10,7 @@ import (
 
 var a App
 
-func TestItSavesParticipant(t *testing.T) {
+func Test_GivenValidParticipant_WhenPostToParticipants_ThenReturns201Code(t *testing.T) {
 
 	a = App{}
 	a.Initialize()
@@ -24,10 +24,10 @@ func TestItSavesParticipant(t *testing.T) {
 }
 
 func BenchmarkHello(b *testing.B) {
+
 	a = App{}
 	a.Initialize()
 
-	
 	for i := 0; i < b.N; i++ {
 
 		payload := []byte(`{"name":"Michael Horsley","email":"Michael.Horsley@sorted.com"}`)
